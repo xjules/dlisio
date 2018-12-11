@@ -66,7 +66,7 @@ private:
      * swap is noexcept (although for strings it's only conditionally after
      * C++17, and not really at all before)
      */
-    friend void swap( strong_typedef& a, strong_typedef& b ) 
+    friend void swap( strong_typedef& a, strong_typedef& b )
         noexcept (nothrow_swappable) {
         swap( static_cast< T& >( a ), static_cast< T& >( b ) );
     }
@@ -93,7 +93,7 @@ strong_typedef< Tag, T >::operator const T&() const noexcept(true) {
 }
 
 template< typename Tag, typename T >
-bool strong_typedef< Tag, T >::operator == 
+bool strong_typedef< Tag, T >::operator ==
     ( const strong_typedef& rhs ) const
     noexcept (nothrow_eq)
 {
