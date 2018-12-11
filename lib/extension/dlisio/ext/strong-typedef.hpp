@@ -38,7 +38,7 @@ private:
     /*
      * Inherit the noexcept property of the underlying swap operation. Usually
      * swap is noexcept (although for strings it's only conditionally after
-     * C++17, and not really at all before
+     * C++17, and not really at all before)
      */
     friend void swap( strong_typedef& a, strong_typedef& b )
         noexcept (nothrow_swappable)
