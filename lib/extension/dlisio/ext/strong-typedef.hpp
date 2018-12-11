@@ -51,33 +51,32 @@ public:
     constexpr static bool nothrow_ge =
         noexcept (std::declval< const T& >() >= std::declval< const T& >());
 
-    bool operator==( const strong_typedef& rhs ) const noexcept (nothrow_eq)
+    bool operator == ( const strong_typedef& rhs ) const noexcept (nothrow_eq)
     {
         return this->value == rhs.value;
     }
 
-    bool operator!=( const strong_typedef& rhs ) const noexcept (nothrow_ne)
+    bool operator != ( const strong_typedef& rhs ) const noexcept (nothrow_ne)
     {
         return this->value != rhs.value;
     }
 
-    bool operator<( const strong_typedef& rhs ) const noexcept (nothrow_lt)
+    bool operator < ( const strong_typedef& rhs ) const noexcept (nothrow_lt)
     {
         return this->value < rhs.value;
     }
 
-    bool operator<=( const strong_typedef& rhs ) const noexcept (nothrow_le)
+    bool operator <= ( const strong_typedef& rhs ) const noexcept (nothrow_le)
     {
         return this->value <= rhs.value;
     }
 
-    bool operator>( const strong_typedef& rhs ) const noexcept (nothrow_gt)
+    bool operator > ( const strong_typedef& rhs ) const noexcept (nothrow_gt)
     {
         return this->value > rhs.value;
     }
 
-
-    bool operator>=( const strong_typedef& rhs ) const noexcept (nothrow_ge)
+    bool operator >= ( const strong_typedef& rhs ) const noexcept (nothrow_ge)
     {
         return this->value >= rhs.value;
     }
