@@ -333,7 +333,7 @@ std::pair< int, bookmark > tag( basic_file< Stream >& fs, int remaining ) {
     char* ptr = body_buffer.data() + 12;
     cursor.strlen = 12 - intlen;
 
-    mark.name.origin = origin;
+    mark.name.origin = dl::types::origin { origin };
     mark.name.copy = copynum;
 
     /*
@@ -364,7 +364,7 @@ std::pair< int, bookmark > tag( basic_file< Stream >& fs, int remaining ) {
     }
 
     /* all good - complete the obname */
-    mark.name.id.assign( xs, namelen );
+    mark.name.id = dl::types::ident{ std::string{ xs, namelen } };
 
     cursor.skip_remaining();
     return { cursor.remaining, mark };

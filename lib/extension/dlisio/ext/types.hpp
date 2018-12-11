@@ -7,6 +7,8 @@
 #include <utility>
 #include <vector>
 
+#include "strong-typedef.hpp"
+
 namespace dl {
 
 enum class representation_code : std::uint8_t {
@@ -39,19 +41,61 @@ enum class representation_code : std::uint8_t {
     units  = DLIS_UNITS,
 };
 
+namespace types {
+
+#define DLIS_REGISTER_TYPEALIAS(name, type) \
+    struct name : detail::strong_typedef< name, type > { \
+        using detail::strong_typedef< name, type >::strong_typedef; \
+    }
+
+DLIS_REGISTER_TYPEALIAS(fshort, float);
+DLIS_REGISTER_TYPEALIAS(isingl, float);
+DLIS_REGISTER_TYPEALIAS(vsingl, float);
+DLIS_REGISTER_TYPEALIAS(uvari,  std::int32_t);
+DLIS_REGISTER_TYPEALIAS(origin, std::int32_t);
+DLIS_REGISTER_TYPEALIAS(ident,  std::string);
+DLIS_REGISTER_TYPEALIAS(ascii,  std::string);
+DLIS_REGISTER_TYPEALIAS(units,  std::string);
+
+#undef DLIS_REGISTER_TYPEALIAS
+
+template< typename T, int > struct validated;
+template< typename T > struct validated< T, 2 > { T V, A; };
+template< typename T > struct validated< T, 3 > { T V, A, B; };
+
+using fsing1 = validated< float, 2 >;
+using fsing2 = validated< float, 3 >;
+using fdoub1 = validated< double, 2 >;
+using fdoub2 = validated< double, 3 >;
+
 struct datetime {
     int Y, TZ, M, D, H, MN, S, MS;
 };
 
 struct object_name {
-    std::int32_t origin;
+    dl::types::origin origin;
     std::uint8_t copy;
-    std::string id;
+    dl::types::ident id;
+
+    bool operator==( const object_name& rhs ) const {
+        return origin == rhs.origin
+            && copy == rhs.copy
+            && id == rhs.id;
+    }
 
     std::tuple< long, long, std::string > as_tuple() const {
-        return std::make_tuple( this->origin, this->copy, this->id );
+        return std::make_tuple(
+            static_cast< const dl::types::origin::value_type& >( this->origin ),
+            this->copy,
+            static_cast< const dl::types::ident::value_type& >( this->id )
+        );
     }
 };
+
+}
+
+using types::datetime;
+using types::object_name;
 
 int sshort( const char*& xs ) noexcept;
 int snorm( const char*& xs ) noexcept;

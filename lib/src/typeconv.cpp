@@ -166,7 +166,9 @@ object_name obname( const char*& xs ) {
     std::uint8_t copy;
 
     xs = dlis_obname( xs, &orig, &copy, &len, str );
-    return { orig, copy, std::string( str, str + len ) };
+    return { dl::types::origin{ orig }, 
+             copy,
+             dl::types::ident{ std::string( str, str + len ) } };
 }
 
 object_name obname( const char*& xs, int nmemb ) {
@@ -200,7 +202,7 @@ object_name obname( const char*& xs, int nmemb ) {
 
     // TODO: stronger exception guarantee?
     xs = dlis_ident( ptr - 1, &len, str );
-    return { orig, copy, str };
+    return { dl::types::origin{ orig }, copy, dl::types::ident{ str } };
 }
 
 std::tuple< std::string, long, int, std::string > objref( const char*& xs ) {
