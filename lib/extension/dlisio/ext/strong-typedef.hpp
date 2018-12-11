@@ -33,6 +33,43 @@ public:
     explicit operator T&() noexcept (true);
     explicit operator const T&() const noexcept (true);
 
+    bool operator==( const strong_typedef& rhs ) const
+        noexcept (std::declval< const T& >() == std::declval< const T& >())
+    {
+        return this->value == rhs.value;
+    }
+
+    bool operator!=( const strong_typedef& rhs ) const
+        noexcept (std::declval< const T& >() != std::declval< const T& >())
+    {
+        return this->value != rhs.value;
+    }
+
+    bool operator<( const strong_typedef& rhs ) const
+        noexcept (std::declval< const T& >() < std::declval< const T& >())
+    {
+        return this->value < rhs.value;
+    }
+
+    bool operator<=( const strong_typedef& rhs ) const
+        noexcept (std::declval< const T& >() <= std::declval< const T& >())
+    {
+        return this->value <= rhs.value;
+    }
+
+    bool operator>( const strong_typedef& rhs ) const
+        noexcept (std::declval< const T& >() > std::declval< const T& >())
+    {
+        return this->value > rhs.value;
+    }
+
+
+    bool operator>=( const strong_typedef& rhs ) const
+        noexcept (std::declval< const T& >() >= std::declval< const T& >())
+    {
+        return this->value >= rhs.value;
+    }
+
 private:
     T value;
     /*
