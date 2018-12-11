@@ -33,39 +33,51 @@ public:
     explicit operator T&() noexcept (true);
     explicit operator const T&() const noexcept (true);
 
-    bool operator==( const strong_typedef& rhs ) const
-        noexcept (std::declval< const T& >() == std::declval< const T& >())
+    constexpr static bool nothrow_eq =
+        noexcept (std::declval< const T& >() == std::declval< const T& >());
+
+    constexpr static bool nothrow_ne =
+        noexcept (std::declval< const T& >() != std::declval< const T& >());
+
+    constexpr static bool nothrow_lt =
+        noexcept (std::declval< const T& >() < std::declval< const T& >());
+
+    constexpr static bool nothrow_le =
+        noexcept (std::declval< const T& >() <= std::declval< const T& >());
+
+    constexpr static bool nothrow_gt =
+        noexcept (std::declval< const T& >() < std::declval< const T& >());
+
+    constexpr static bool nothrow_ge =
+        noexcept (std::declval< const T& >() >= std::declval< const T& >());
+
+    bool operator==( const strong_typedef& rhs ) const noexcept (nothrow_eq)
     {
         return this->value == rhs.value;
     }
 
-    bool operator!=( const strong_typedef& rhs ) const
-        noexcept (std::declval< const T& >() != std::declval< const T& >())
+    bool operator!=( const strong_typedef& rhs ) const noexcept (nothrow_ne)
     {
         return this->value != rhs.value;
     }
 
-    bool operator<( const strong_typedef& rhs ) const
-        noexcept (std::declval< const T& >() < std::declval< const T& >())
+    bool operator<( const strong_typedef& rhs ) const noexcept (nothrow_lt)
     {
         return this->value < rhs.value;
     }
 
-    bool operator<=( const strong_typedef& rhs ) const
-        noexcept (std::declval< const T& >() <= std::declval< const T& >())
+    bool operator<=( const strong_typedef& rhs ) const noexcept (nothrow_le)
     {
         return this->value <= rhs.value;
     }
 
-    bool operator>( const strong_typedef& rhs ) const
-        noexcept (std::declval< const T& >() > std::declval< const T& >())
+    bool operator>( const strong_typedef& rhs ) const noexcept (nothrow_gt)
     {
         return this->value > rhs.value;
     }
 
 
-    bool operator>=( const strong_typedef& rhs ) const
-        noexcept (std::declval< const T& >() >= std::declval< const T& >())
+    bool operator>=( const strong_typedef& rhs ) const noexcept (nothrow_ge)
     {
         return this->value >= rhs.value;
     }
